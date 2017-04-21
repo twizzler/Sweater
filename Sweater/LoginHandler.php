@@ -30,31 +30,25 @@ trait LoginHandler {
 		return $arrData;
 	}
 	
-	function getServers()
-	{
+	function getServers(){
 		return $this->strServers;
-	}
-
-	function sendSecurityKey($skey, $id, $arrData, Client $objClient)
-	{
-		$objClient->sendXt('sst', -1, $skey, $id);
 	}
 	
 	function handleVerChk($arrData, Client $objClient){
 		$objClient->sendData('<msg t="sys"><body action="apiOK" r="0"></body></msg>');
 	}
 	
-	//Implement SecurityKeys for GameMenu and Private Messages System
 	function handleLogin($arrData, Client $objClient){
 		$strUser = $arrData['body']['login']['nick'];
 		$strPass = $arrData['body']['login']['pword'];
+		$isBanned = "SELECT isBanned FROM `users` WHERE ID = :Player";
 		Silk\Logger::Log('Client is attempting to login with username \'' . $strUser . '\'');
 		$blnExist = $this->objDatabase->playerExists($strUser);
 		$arrUser = $this->objDatabase->getRow($strUser);
-		if($blnExist === false){
-			$objClient->sendError(100);
-			return $this->removeClient($objClient->resSocket);
-		}elseif($arrUser['Banned'] == 1){
+        if($blnExist === false){
+            $objClient->sendError(100);
+            return $this->removeClient($objClient->resSocket);
+        }elseif($arrUser['Banned'] == 1){
             $objClient->sendError(603);
             return $this->removeClient($objClient->resSocket);
         }
@@ -76,7 +70,6 @@ trait LoginHandler {
 				$strHash = md5($strHash);
 				Silk\Logger::Log('Random string: ' . $strHash);
 				$strServers = $this->objDatabase->getServerPopulation();
-				$objClient->sendXt('guc', -1, $strServers . ',0'); // replace 0 with number of buddies online
 				$objClient->sendXt('l', -1, $intUser, $strHash, '', $strServers);
 				$this->objDatabase->updateColumn($intUser, 'LoginKey', $strHash);
 				$this->removeClient($objClient->resSocket);
@@ -87,7 +80,6 @@ trait LoginHandler {
 			$strHash = substr($strPass, 32);
 			$strLoginKey = $this->objDatabase->getLoginKey($intUser);
 			if($strHash == $strLoginKey){
-				$objClient->sendXt('f#lb', -1, $strHash);
 				$objClient->sendXt('l', -1);
 				$objClient->setClient($arrUser);
 				$this->updateStats();
@@ -95,7 +87,7 @@ trait LoginHandler {
 				$objClient->sendError(101);
 				$this->removeClient($objClient->resSocket);
 			}
-			//$objClient->updateColumn('LoginKey', '');
+			$objClient->updateColumn('LoginKey', '');
 		}
 	}
 	
