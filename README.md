@@ -21,7 +21,7 @@ Sweater is a program written in PHP designed to reverse engineer Club Penguin
 	<li> Create a database and import Install.sql</li>
 	<li> Create a user account using INSERT</li>
 	<li> Configure Server.conf</li>
-	<li> Make sure you've upload the openglows (glowing.fla) in your client folder and added it to dependencies.json</li>
+	<li> Make sure you've uploaded the openglows (glowing.fla) in your client folder and added it to dependencies.json</li>
 	<li> Execute Runner.php with a server ID from the configuration as an argument</li>
 </ul>
 
