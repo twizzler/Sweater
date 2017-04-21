@@ -56,11 +56,6 @@ trait GameHandler {
 		'n#gn' => 'handleGetIgnoreList',
 		// ModerationHandler
 		'o#k' => 'handleKick',
-		'o#sk' => 'handleModKickUser',
-		'o#ga' => 'handleModGlobalAlert',
-		'o#ra' => 'handleModRoomAlert',
-		'o#a' => 'handleModAlert',
-		'o#i' => 'handleModInvisible',
 		// PuffleHandler
 		'p#pip' => 'handlePufflePip',
 		'p#pir' => 'handlePufflePir',
@@ -107,9 +102,9 @@ trait GameHandler {
 		'u#sp' => 'handleSendPosition',
 		'u#ss' => 'handleSendSafeMessage',
 		//Gaming Handlers
-        'gz' => 'handleGameStatus',
-        'm' => 'handleMovePuck',
-        'zo' => 'handleGameOver'
+        	'gz' => 'handleGameStatus',
+        	'm' => 'handleMovePuck',
+        	'zo' => 'handleGameOver'
 		
 	];
 	
@@ -334,7 +329,6 @@ trait GameHandler {
 	
 	function handleGameOver(Array $arrData, Client $objClient){
 		$intScore = $arrData[4];
-		//$objClient->sendData('%xt%zo%' . $objClient->getIntRoom() . '%' . $objClient->intCoins . '%%0%0%0%');
 		if(is_numeric($intScore)) {
 			$intTotalCoins = (strlen($intScore) > 1 ? round($intScore / 10) : (($intScore * strlen("Sweater") * 250) % 84) * rand(9, 12));
 			$objClient->sendXt('zo', $objClient->getIntRoom(), $intTotalCoins);
@@ -766,39 +760,7 @@ trait GameHandler {
         $blnIgloo = $intRoom > 1000;
         $strMethod = $blnIgloo ? 'handleJoinPlayer' : 'handleJoinRoom';
         $this->$strMethod([4 => $intRoom, 0, 0], $objClient);
-	}
-	
-	function handleUpgradeItem(Array $arrData, Client $objClient){
-            $intPlayer = $arrData[4];
-            $strItem = $arrData[5];
-            $permissions = $this->objDatabase->getColumns($intPlayer, ['Permissions'])["Permissions"];
-            $result = json_decode($permissions, true);
-            
-            if(isset($result[$strItem]) && $result[$strItem] == 1){
-                return true;
-            } else {         
-                $items = json_decode(file_get_contents("http://cdn.cpps.one/api/shop/crumbs/shop_crumbs.json"), true)["shop_crumbs"];
-                
-                if(isset($items[$strItem])){
-                    $item = $items[$strItem];
-                    if($objClient->intCredits >= $item["cost"]){
-                        $objClient->delCredits($item["cost"]);
-                        $result[$strItem] = 1;
-                        $result = json_encode($result);
-                        $objClient->updateColumn("Permissions", $result);
-                    }else{
-                        $objClient->sendXt('o#n', -1, "You don't have enough credits");
-                    }
-                }
-            }
-        }
-		
-	function handleBadgesList(Array $arrData, Client $objClient){
-		$intBadges = $objClient->getBadges();
-		
-		$objClient->sendXt("pm#bl", -1, $intBadges);
-	}
-		
+	}	
 }
 
 ?>
