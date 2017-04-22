@@ -1,6 +1,6 @@
 <?php
 
-$pageTitle = 'CPPS.one - Register';
+$pageTitle = 'Sweater - Register';
 
 include('./includes/config.php');
 
