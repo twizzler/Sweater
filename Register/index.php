@@ -18,16 +18,12 @@ if(isset($_POST) && !empty($_POST)){
 	$userTaken = $checkUser->rowCount();
 	if($userTaken > 0){
 		$error = 'Woops username exists';
-	/*}elseif($username < 3){
-		$error = 'Username is too short';
-	}elseif($password < 4){
-		$error = 'Password is too short';
-  */}elseif(!ctype_alnum($username)){
-        $error = "Username can only contain numbers and letters."; 
-    }elseif($password != $repassword){
-        $error = "Passwords do not match !";
-    }else{
-		$insertUser = $database->prepare("INSERT INTO users (Username, Password, Color) VALUES (:username, :password, :color)");
+	}elseif(!ctype_alnum($username)){
+       		$error = "Username can only contain numbers and letters."; 
+    	}elseif($password != $repassword){
+        	$error = "Passwords do not match !";
+    	}else{
+	$insertUser = $database->prepare("INSERT INTO users (Username, Password, Color) VALUES (:username, :password, :color)");
         $insertUser->bindValue(":username", $username);
         $insertUser->bindValue(":password", md5($password));
         $insertUser->bindValue(":color", $color);
@@ -37,7 +33,7 @@ if(isset($_POST) && !empty($_POST)){
 
         $_SESSION["userId"] = $userID;
 
-        header("Location: http://media1.localhost/load.swf");
+        echo '<div class="alert alert-success">You have successfully registered</div>';
     }
 
   }else{
@@ -100,4 +96,4 @@ include ('./includes/header.php');
 
 include ('./includes/footer.php');
 
- ?>
+?>
