@@ -13,7 +13,7 @@ class Server extends Silk\ServerBase {
 	public $objDatabase = null;
 	public $arrPlugins;
 	
-	private $objRoomManager;
+	public $objRoomManager;
 	private static $arrPuffleStats;
 	
 	function __construct($intServerID, $blnUpdate){
