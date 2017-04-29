@@ -23,7 +23,7 @@ class Client extends Silk\ClientBase {
 	public $intX, $intY, $intFrame; // Player room detail fields
 	public $intRank; // Rank field
 	public $Nameglow;
-    public $Namecolour;
+    	public $Namecolour;
 	public $Title;
 	public $Mood;
 	public $Speed;
@@ -37,6 +37,8 @@ class Client extends Silk\ClientBase {
 	public $SnowBallGlow;
 	public $Size;
 	public $Alpha;
+	
+	public $objRoomManager;
 	
 	private $objGameInstance;
 	private $objBot;
@@ -212,49 +214,49 @@ class Client extends Silk\ClientBase {
     function setNameglow($Ng) {
         $this->updateColumn('Nameglow', $Ng);
         $this->Nameglow = $Ng;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	 function setNamecolour($Nc) {
         $this->updateColumn('namecolor', $Nc);
         $this->Namecolour = $Nc;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setRingColor($rc) {
         $this->updateColumn('Ringcolor', $rc);
         $this->setRingColor = $rc;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setMoodColor($Mc) {
         $this->updateColumn('Moodcolor', $Mc);
         $this->MoodColor = $Mc;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setMoodGlow($Mg) {
         $this->updateColumn('Moodglow', $Mg);
         $this->MoodGlow = $Mg;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setPenguinGlow($Pg) {
         $this->updateColumn('Penguinglow', $Pg);
         $this->PenguinGlow = $Pg;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setSnowBallGlow($Sg) {
         $this->updateColumn('Snowballglow', $Sg);
         $this->SnowBallGlow = $Sg;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setChatGlow($Cg) {
         $this->updateColumn('Chatglow', $Cg);
         $this->ChatGlow = $Cg;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setBubbleColor($Bc) {
@@ -272,31 +274,31 @@ class Client extends Silk\ClientBase {
 	function setSpeed($Sp) {
         $this->updateColumn('Speed', $Sp);
         $this->Speed = $Sp;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setTitle($t) {
 		$this->updateColumn('Title', $t);
 		$this->Title = $t;
-        $this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+        $this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setMood($m){
 		$this->updateColumn('Mood', $m);
 		$this->Mood = $m;
-		$this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+		$this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setSize($s){
 		$this->updateColumn('Size', $s);
 		$this->Size = $s;
-		$this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+		$this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function setAlpha($alpha){
 		$this->updateColumn('Alpha', $alpha);
 		$this->Alpha = $alpha;
-		$this->sendData('%xt%up%' . $this->intIntRoom . '%' . $this->buildPlayerString() . '%'); 
+		$this->objRoomManager->sendXt($this->intExtRoom, ['up', $this->intIntRoom, $this->buildPlayerString()]);
     }
 	
 	function clearWalking(){
@@ -422,6 +424,7 @@ class Client extends Silk\ClientBase {
 		
 		$this->objParent->arrClientsByID[$this->intPlayer] = $this;
 		$this->objDatabase = $this->objParent->objDatabase;
+		$this->objRoomManager = $this->objParent->objRoomManager;
 	}
 	
 	function sendXt(){
@@ -458,7 +461,7 @@ class Client extends Silk\ClientBase {
 			$this->updateColumn('Floor', $intFloor);
 			$this->updateColumn('Coins', $this->intCoins);
 			if($this->intExtRoom == $this->intPlayer + 1000){
-				$this->sendData('%xt%ag%' . $this->intIntRoom . '%' . $intFloor . '%' . $this->intCoins . '%');
+			$this->sendData('%xt%ag%' . $this->intIntRoom . '%' . $intFloor . '%' . $this->intCoins . '%');
 			}
 		}
 	}
@@ -479,7 +482,7 @@ class Client extends Silk\ClientBase {
 		$this->updateColumn('Coins', $this->intCoins);
 		$this->intCoins -= $intCost;
 		if($this->intExtRoom == $this->intPlayer + 1000){
-			$this->sendData('%xt%au%' . $this->intIntRoom . '%' . $intIgloo . '%' . $this->intCoins . '%');
+		$this->sendData('%xt%au%' . $this->intIntRoom . '%' . $intIgloo . '%' . $this->intCoins . '%');
 		}
 	}
 	
