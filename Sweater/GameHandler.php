@@ -329,13 +329,13 @@ trait GameHandler {
 	
 	function handleGameOver(Array $arrData, Client $objClient){
 		$intScore = $arrData[4];
-		if(is_numeric($intScore)) {
-			$intTotalCoins = (strlen($intScore) > 1 ? round($intScore / 10) : (($intScore * strlen("Sweater") * 250) % 84) * rand(9, 12));
-			$objClient->sendXt('zo', $objClient->getIntRoom(), $intTotalCoins);
-			if($intScore < 99999) {
-				$objClient->addCoins($intTotalCoins);
-			}
+		if(is_numeric($intScore)){
+			$intEarned = round($intScore / 10);
 		}
+		if($intScore < 9999){
+			$objClient->addCoins($intEarned);
+		}
+		$objClient->sendXt('zo', $objClient->getIntRoom(), $objClient->intCoins);
 	}
 
 
