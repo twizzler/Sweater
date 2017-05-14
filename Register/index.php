@@ -119,7 +119,6 @@
 
 <div>
 <center>
- <br /><img src="./assets/img/create_account.png" style="margin-left: -392px;width: 1920px;margin-top: -71px;">
  <h3>Create an Account</h3>
  <br />
  <br />
