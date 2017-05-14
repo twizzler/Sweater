@@ -21,36 +21,6 @@
 
 		return $error;
 	}
-
-	/*function addUser($strUsername, $strEmail, $strPassword, $intNow, $intColor)
-	{
-		$insertUser = $database->prepare("INSERT INTO users (Username, Email, RegisteredTime, Password, Color) VALUES (:username, :email, :registered_time, :password, :color)");
-		$insertUser->bindValue(":username", $strUsername);
-		$insertUser->bindValue(":email", $strEmail);
-		$insertUser->bindValue(":registered_time", $intNow);
-		$insertUser->bindValue(":password", md5($strPassword));
-		$insertUser->bindValue(":color", $intColor);
-		$insertUser->execute();
-
-		$this->sendError('success', 'You have successfully registered');
-		$penguinId = $database->lastInsertId();
-	}
-	
-	function userTaken($username)
-	{
-		$checkUser =  $database->prepare("SELECT Username from users WHERE Username = :username");
-		$checkUser->bindValue(':username', $username);
-		$checkUser->execute();
-		$userTaken = $checkUser->rowCount() > 0;
-	}
-
-	function emailTaken($email)
-	{
-		$checkEmail =  $database->prepare("SELECT Email from users WHERE Email = :email");
-		$checkEmail->bindValue(':email', $email);
-		$checkEmail->execute();
-		$emailTaken = $checkEmail->rowCount() > 0;
-	}*/
 		
 	if(isset($_POST) && !empty($_POST))
 	{
