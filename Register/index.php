@@ -103,7 +103,9 @@
 				$insertUser->bindValue(":color", $intColor);
 				$insertUser->execute();
 				
-				echo 'You have successfully registered';
+				if($insertUser->execute()){
+					echo 'You have successfully registered';
+				}
 				$penguinId = $database->lastInsertId();
 		
 			}
