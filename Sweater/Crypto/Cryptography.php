@@ -4,40 +4,37 @@ namespace Sweater\Crypto;
 
 trait Cryptography {
 	
-	function encryptPassword($strPassword, $strRandomKey){
-		$strEncrypt = $this->swapHash($strPassword);
-		$strEncrypt .= $strRandomKey;
-		$strEncrypt .= 'Y(02.>\'H}t":E1';
-		$strEncrypt = md5($strEncrypt);
-		$strEncrypt = $this->swapHash($strEncrypt);
-		return $strEncrypt;
-	}
-	
-	function generateRandomString(){
-		$strAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$strCharacters = '`~@#$()_+-={}|[]:,.';
-		$intAlpha = strlen($strAlphabet);
-		$intChar = strlen($strCharacters);
-		$strRandom = '';
-		for($intLoops = 0; $intLoops < 10; $intLoops++){
-			$intRandom = mt_rand(0, 1);
-			$intCase = mt_rand(0, 1);
-			$intSubstring = mt_rand(0, $intRandom ? $intAlpha : $intChar);
-			$strChar = substr($intRandom ? $strAlphabet : $strCharacters, $intSubstring, 1);
-			if($intRandom == 1 && $intCase == 1) $strChar = strtolower($strChar);
-			$strRandom .= $strChar;
+	private $strCharacterSet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789`~@#$()_+-={}|[]:,.";
+
+	function generateRandomKey() {
+		$strKeyLength = mt_rand(7, 10);
+		$strRandomKey = "";
+
+		foreach(range(0, $strKeyLength) as $strCurrentLength) {
+			$strRandomKey .= substr($this->strCharacterSet, mt_rand(0, strlen($this->strCharacterSet)), 1);
 		}
-		return $strRandom;
-	}
-	
-	function swapHash($strHash){
-		$strSwapped = substr($strHash, 16, 16);
-		$strSwapped .= substr($strHash, 0, 16);
-		return $strSwapped;
+
+		return $strRandomKey;
 	}
 
+	function encryptPassword($strPassword, $strMD5 = true) {
+		if($strMD5 !== false) {
+			$strPassword = md5($strPassword);
+		}
+
+		$strHash = substr($strPassword, 16, 16) . substr($strPassword, 0, 16);
+		return $strHash;
+	}
+
+	function getLoginHash($strPassword, $strRandomKey) {
+		$strHash = $this->encryptPassword($strPassword, false);
+		$strHash .= $strRandomKey;
+		$strHash .= 'Y(02.>\'H}t":E1';
+		$strHash = $this->encryptPassword($strHash);
+
+		return $strHash;
+	}
 	
 }
-
 
 ?>
