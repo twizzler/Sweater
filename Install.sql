@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `Stats` (
 CREATE TABLE IF NOT EXISTS `users` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `Username` char(12) NOT NULL COMMENT 'Nickname',
-  `Password` char(40) NOT NULL COMMENT 'Password hash',
+  `Password` varchar(255) NOT NULL COMMENT 'Password hash',
   `LoginKey` char(40) DEFAULT NULL COMMENT 'Used for logging into the game sevrer',
   `Active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `Status` tinytext NOT NULL COMMENT 'Contains the player''s online status',
