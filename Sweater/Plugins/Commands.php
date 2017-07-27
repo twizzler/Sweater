@@ -9,8 +9,8 @@ class Commands extends BasePlugin {
 	
 	protected $arrDependencies = ['Bot'];
 	protected $intVersion = 0.5;
-	protected $strAuthor = 'Arthur';
-	
+	protected $strAuthor = 'Arthur'; /* 3/4 oh this file was made by myself (Kevin), 
+					    credits go to Arthur for the source though */
 	public $blnConstructor = true;
 	public $blnGame = true;
 	
