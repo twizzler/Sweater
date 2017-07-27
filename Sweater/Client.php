@@ -39,11 +39,11 @@ class Client extends Silk\ClientBase {
 	public $Alpha;
 	
 	public $objRoomManager;
+	public $strRandomKey;
 	
 	private $objGameInstance;
 	private $objBot;
 	private $objDatabase;
-	private $strRandomKey; // Random key field
 	
 	// For all the lazy people out there (like me!)
 	function __call($strName, $arrArguments){
