@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `RoomFurniture` varchar(240) NOT NULL DEFAULT '' COMMENT 'Igloo furniture',
   `Furniture` varchar(240) NOT NULL DEFAULT '' COMMENT 'Furniture inventory',
   `Postcards` varchar(240) NOT NULL DEFAULT '\'0\'' COMMENT 'Player postcards',
-  `Title` mediumtext NOT NULL,
+  `Title` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Nameglow` varchar(240) NOT NULL DEFAULT '\'0\'' ,
   `Namecolor` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Text` mediumtext NOT NULL DEFAULT '\'0\'',
