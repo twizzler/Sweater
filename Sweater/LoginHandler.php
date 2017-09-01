@@ -55,24 +55,17 @@ trait LoginHandler {
 			Silk\Logger::Log('Handling login hashing', 'DEBUG');
 			$strUppedPass = strtoupper($strPassword);
 			$strEncrypt = $strUppedPass;
-			//if($strEncrypt != $strPass){
 			if(password_verify($strPass, $strPassword) !== true) {
 				Silk\Logger::Log('Failed login attempt for user \'' . $strUser . '\'', Silk\Logger::Debug);
 				$objClient->sendError(101);
 				$this->removeClient($objClient->resSocket);
-			}elseif($arrUser['ID'] > 99999999999){
-				Silk\Logger::Log('Failed login attempt for user \'' . $strUser . '\'', Silk\Logger::Debug);
-				$objClient->sendError(101);
-				$this->removeClient($objClient->resSocket);
-			}else {
+			else {
 				// TODO: Implement buddy-on-server smiley thing
 				$objClient->sendXt('sd', -1, $this->getServers());
 				$strHash = md5(strrev($objClient->strRandomKey));
 				Silk\Logger::Log('Random string: ' . $strHash);
 				$objClient->arrBuddies = json_decode($arrUser['Buddies'], true);
 				$strServers = $this->objDatabase->getServerPopulation();
-				$intBuddiesOnline = $this->objDatabase->getOnlineBuddiesCount($objClient);
-				$objClient->sendXt('guc', -1, $strServers . ',' . $intBuddiesOnline);
 				$objClient->sendXt('l', -1, $intUser, $strHash, '', $strServers);
 				$this->objDatabase->updateColumn($intUser, 'LoginKey', $strHash);
 				$this->removeClient($objClient->resSocket);
