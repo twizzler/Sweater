@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Title` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Nameglow` varchar(240) NOT NULL DEFAULT '\'0\'' ,
   `Namecolor` varchar(240) NOT NULL DEFAULT '\'0\'',
-  `Text` mediumtext NOT NULL DEFAULT '\'0\'',
+  `Text` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Bubblecolor` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Penguinglow` varchar(240) NOT NULL DEFAULT '\'0\'',
   `Snowballglow` varchar(240) NOT NULL DEFAULT '\'0\'',
