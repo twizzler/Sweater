@@ -59,7 +59,7 @@ trait LoginHandler {
 				Silk\Logger::Log('Failed login attempt for user \'' . $strUser . '\'', Silk\Logger::Debug);
 				$objClient->sendError(101);
 				$this->removeClient($objClient->resSocket);
-			else {
+			}else {
 				// TODO: Implement buddy-on-server smiley thing
 				$objClient->sendXt('sd', -1, $this->getServers());
 				$strHash = md5(strrev($objClient->strRandomKey));
