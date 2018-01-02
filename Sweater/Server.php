@@ -44,6 +44,7 @@ class Server extends Silk\ServerBase {
 			throw new Exceptions\StartupException($objException->getMessage());
 		}
 		$this->objDatabase->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
+		$this->objDatabase->setAttribute(\PDO::ATTR_PERSISTENT, true);
 		if($this->arrServer['Type'] === 'Game'){
 			$this->objRoomManager = new RoomManager();
 			$this->updateStats();
