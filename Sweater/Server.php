@@ -148,6 +148,8 @@ class Server extends Silk\ServerBase {
 					$strDatabase = $this->arrConfig['Database']['Database'];
 					$this->objDatabase = new CPDatabase('mysql:host=' . $strAddress . ';dbname=' . $strDatabase, $strUsername, $strPassword);
 				} catch(PDOException $objException){
+					Silk\Logger::Log("MySQL disconnected ... reconnecting..");
+					$this->objDatabase = new CPDatabase('mysql:host=' . $strAddress . ';dbname=' . $strDatabase, $strUsername, $strPassword);
 					throw new Exception($objException->getMessage());
 				}
 				if($this->arrServer['Type'] === 'Game'){
